@@ -1,33 +1,40 @@
 # BITS-Credentials
 
-Email : vivek.kumar9@wipro.com
-Password : Vivek@090909
+## Wipro Email
 
-Credentials
+Email : vivek.kumar9@wipro.com
+
+Password : Th@kur@090909##
+
+## Credentials
 
 NAME: VIVEK KUMAR
+
 ID : 202419TW021
 
+---
+
+## Email
+
 Email : 202419tw021@wilp.bits-pilani.ac.in
+
 Password : Wp$29122004
 
-Teams Credentials:
+## Teams Credentials:
 
 Email : 202419tw021@wilp.bits-pilani.ac.in
-Password : Vivek@090909
+Password : Wilp@123
 
-eLearning Portal : 
-https://elearn.bits-pilani.ac.in/
+## [eLearning Portal](https://elearn.bits-pilani.ac.in)
 
-Login Credentials for eLearn portal:
-    
 User ID: 202419tw021@wilp.bits-pilani.ac.in 
-Default eLearn password: 29122004
 
-OpenAthens Credentials:
+Password: Vivek@090909
 
-Portal: https://my.openathens.net/app/researchers 
+## [OpenAthens Credentials](https://my.openathens.net/app/researchers)
+
 Username: bitsvkumar049
+
 Password: Vivek@090909##
 
 Lab Work site :
