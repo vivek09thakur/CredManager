@@ -20,10 +20,14 @@ Email : 202419tw021@wilp.bits-pilani.ac.in
 
 Password : Wp$29122004
 
+---
+
 ## Teams Credentials:
 
 Email : 202419tw021@wilp.bits-pilani.ac.in
 Password : Wilp@123
+
+---
 
 ## [eLearning Portal](https://elearn.bits-pilani.ac.in)
 
@@ -31,19 +35,28 @@ User ID: 202419tw021@wilp.bits-pilani.ac.in
 
 Password: Vivek@090909
 
+---
+
 ## [OpenAthens Credentials](https://my.openathens.net/app/researchers)
 
 Username: bitsvkumar049
 
 Password: Vivek@090909##
 
-Lab Work site :
+---
 
-https://taxila-aws.bits-pilani.ac.in/mod/assign/view.php?id=234024
+## [Taxila Portal](https://taxila-aws.bits-pilani.ac.in/mod/assign/view.php?id=234024
+)
+
+User ID: 202419tw021@wilp.bits-pilani.ac.in 
+
+Password: Vivek@090909
+
 
 Lab URL:
- SEM1 : https://cloudlabs.nuvepro.com/
- SEM2: https://osha-bits.codeargo.net/booking/
+
+ [SEM1](https://cloudlabs.nuvepro.com)
+ [SEM2](https://osha-bits.codeargo.net/booking)
 
 Mercer | Metti (Exam Credentials):
 username: 202419tw021@wilp.bits-pilani.ac.in
