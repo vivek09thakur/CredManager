@@ -51,11 +51,13 @@ User ID: 202419tw021@wilp.bits-pilani.ac.in
 
 Password: Vivek@090909
 
+---
 
-Lab URL:
 
- [SEM1](https://cloudlabs.nuvepro.com)
- [SEM2](https://osha-bits.codeargo.net/booking)
+## Lab URL
+
+ - [SEM1](https://cloudlabs.nuvepro.com)
+ - [SEM2](https://osha-bits.codeargo.net/booking)
 
 Mercer | Metti (Exam Credentials):
 username: 202419tw021@wilp.bits-pilani.ac.in
