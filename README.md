@@ -25,6 +25,7 @@ Password : Wp$29122004
 ## Teams Credentials:
 
 Email : 202419tw021@wilp.bits-pilani.ac.in
+
 Password : Wilp@123
 
 ---
@@ -60,25 +61,25 @@ Password: Vivek@090909
  - [SEM2](https://osha-bits.codeargo.net/booking)
 
 Mercer | Metti (Exam Credentials):
+
 username: 202419tw021@wilp.bits-pilani.ac.in
 password: Vivek@090909
 
-Mid-Sem:
-URL : https://certification.mettl.com/wipro-bits-wilp/applicant/login
+Mid-Sem: https://certification.mettl.com/wipro-bits-wilp/applicant/login
 
 
-Exam Terms
+## Exam Terms
 
 1. EC1 - Online quizzes labs
 2. EC2 - Mid-sem  (Chug gye guru)S
 3. EC3 - Finals
 
-AVOID -
+## AVOID -
 
 1. E-Grade (not more than 2)
 2. Doing class from phone
 3. Dressing inappropriate during class
 
-MUST -
+## MUST -
 
 1. Attendance > 65%
