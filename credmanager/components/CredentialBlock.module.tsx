@@ -7,10 +7,11 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: width < 500 ? "column" : "row",
 		flexWrap: "wrap",
-		justifyContent: "flex-start",
+		justifyContent: "center",
 		padding: width < 400 ? 8 : 12,
 		gap: width < 400 ? 8 : 12,
 		fontFamily: "Poppins_400Regular",
+		width: "100%",
 	},
 	block: {
 		backgroundColor: "#c8aef1ff",
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		marginBottom: 8,
-		color: "#333",
+		color: "#202124",
 		fontSize: width < 400 ? 13 : 15,
 	},
 	row: {
