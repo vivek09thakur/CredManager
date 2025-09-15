@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./CredentialBlock.module";
 import { useFonts } from "@expo-google-fonts/poppins/useFonts";
 import { Poppins_400Regular } from "@expo-google-fonts/poppins/400Regular";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 type Credential = {
   username: string;
@@ -49,12 +50,13 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
                 style={styles.copyBtn}
                 type="button"
                 onClick={() => copyToClipboard(cred.username)}
+                aria-label="Copy username"
               >
-                <span style={styles.copyBtnText}>Copy</span>
+                <Ionicons name="copy-outline" size={20} />
               </button>
             </div>
             <div style={styles.label}>Password</div>
-            <div style={styles.row}>
+            <div style={styles.row}></div>
               <span style={styles.text}>
                 {showPassword[index]
                   ? cred.password
@@ -64,24 +66,25 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
                 style={styles.copyBtn}
                 type="button"
                 onClick={() => copyToClipboard(cred.password)}
+                aria-label="Copy password"
               >
-                <span style={styles.copyBtnText}>Copy</span>
+                <Ionicons name="copy-outline" size={20} />
               </button>
               <button
                 style={styles.toggleBtn}
                 type="button"
                 onClick={() => toggleShowPassword(index)}
+                aria-label={showPassword[index] ? "Hide password" : "Show password"}
               >
-                <span style={styles.toggleBtnText}>
-                  {showPassword[index] ? "Hide" : "Show"}
-                </span>
+                <Ionicons
+                  name={showPassword[index] ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                />
               </button>
             </div>
-          </div>
         ))}
       </div>
     );
   }
 };
-
 export default CredentialBlocks;
