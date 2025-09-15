@@ -2,27 +2,33 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
 
+// Responsive values based on width
+const isSmall = width < 400;
+const isMedium = width >= 400 && width < 800;
+const isLarge = width >= 800;
+
 const styles = StyleSheet.create({
 	container: {
 		display: "flex",
 		flexDirection: "row",
 		flexWrap: "wrap",
-		justifyContent: "flex-start",
+		justifyContent: "center",
 		alignItems: "flex-start",
-		padding: width < 400 ? 6 : 10,
-		gap: width < 400 ? 6 : 10,
+		padding: isSmall ? 4 : isMedium ? 8 : 16,
+		gap: isSmall ? 4 : isMedium ? 8 : 12,
 		fontFamily: "Poppins_400Regular",
 		width: "100%",
+		height: "100%",
 	},
 	block: {
 		backgroundColor: "#c8aef1ff",
 		borderRadius: 5,
-		padding: width < 400 ? 10 : 14,
-		minWidth: width < 400 ? 110 : 140,
-		maxWidth: width < 400 ? 150 : 200,
+		padding: isSmall ? 8 : isMedium ? 12 : 18,
+		minWidth: isSmall ? 90 : isMedium ? 130 : 180,
+		maxWidth: isSmall ? 120 : isMedium ? 180 : 260,
 		flexGrow: 1,
-		flexBasis: width < 500 ? "48%" : "23%",
-		margin: width < 400 ? 3 : 5,
+		flexBasis: isSmall ? "98%" : isMedium ? "45%" : "22%",
+		margin: isSmall ? 2 : isMedium ? 4 : 6,
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 1 },
 		shadowOpacity: 0.08,
@@ -32,13 +38,13 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		color: "#817f7fff",
 		marginBottom: 1,
-		fontSize: width < 400 ? 10 : 12,
+		fontSize: isSmall ? 9 : isMedium ? 11 : 13,
 		letterSpacing: 0.2,
 	},
 	text: {
 		marginBottom: 6,
 		color: "#202124",
-		fontSize: width < 400 ? 12 : 14,
+		fontSize: isSmall ? 11 : isMedium ? 13 : 15,
 	},
 	row: {
 		display: "flex",
@@ -48,27 +54,27 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 	},
 	copyBtn: {
-		marginLeft: 6,
-		paddingVertical: width < 400 ? 1 : 2,
-		paddingHorizontal: width < 400 ? 5 : 7,
+		marginLeft: 4,
+		paddingVertical: isSmall ? 1 : 2,
+		paddingHorizontal: isSmall ? 4 : 6,
 		backgroundColor: "#e0e0e0",
 		borderRadius: 6,
 		borderWidth: 0,
 	},
 	copyBtnText: {
-		fontSize: width < 400 ? 9 : 11,
+		fontSize: isSmall ? 8 : isMedium ? 10 : 12,
 		color: "#333",
 	},
 	toggleBtn: {
-		marginLeft: 6,
-		paddingVertical: width < 400 ? 1 : 2,
-		paddingHorizontal: width < 400 ? 5 : 7,
+		marginLeft: 4,
+		paddingVertical: isSmall ? 1 : 2,
+		paddingHorizontal: isSmall ? 4 : 6,
 		backgroundColor: "#ffe082",
 		borderRadius: 6,
 		borderWidth: 0,
 	},
 	toggleBtnText: {
-		fontSize: width < 400 ? 9 : 11,
+		fontSize: isSmall ? 8 : isMedium ? 10 : 12,
 		color: "#795548",
 	},
 });

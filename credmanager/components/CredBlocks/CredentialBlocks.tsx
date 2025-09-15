@@ -23,6 +23,7 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
   const [showPassword, setShowPassword] = useState<boolean[]>(
     credentials.map(() => false)
   );
+  const [copied, setCopied] = useState<{ type: "username" | "password"; index: number } | null>(null);
 
   const toggleShowPassword = (index: number) => {
     setShowPassword((prev) => {
@@ -30,6 +31,14 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
       updated[index] = !updated[index];
       return updated;
     });
+  };
+
+  const handleCopy = async (type: "username" | "password", value: string, index: number) => {
+    await copyToClipboard(value);
+    setCopied({ type, index });
+    setTimeout(() => {
+      setCopied((prev) => (prev && prev.type === type && prev.index === index ? null : prev));
+    }, 1500);
   };
 
   let [fontsLoaded] = useFonts({
@@ -49,14 +58,18 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
               <button
                 style={styles.copyBtn}
                 type="button"
-                onClick={() => copyToClipboard(cred.username)}
+                onClick={() => handleCopy("username", cred.username, index)}
                 aria-label="Copy username"
               >
-                <Ionicons name="copy-outline" size={20} />
+                {copied && copied.type === "username" && copied.index === index ? (
+                  <Ionicons name="checkmark-outline" size={20} />
+                ) : (
+                  <Ionicons name="copy-outline" size={20} />
+                )}
               </button>
             </div>
             <div style={styles.label}>Password</div>
-            <div style={styles.row}></div>
+            <div style={styles.row}>
               <span style={styles.text}>
                 {showPassword[index]
                   ? cred.password
@@ -65,10 +78,14 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
               <button
                 style={styles.copyBtn}
                 type="button"
-                onClick={() => copyToClipboard(cred.password)}
+                onClick={() => handleCopy("password", cred.password, index)}
                 aria-label="Copy password"
               >
-                <Ionicons name="copy-outline" size={20} />
+                {copied && copied.type === "password" && copied.index === index ? (
+                  <Ionicons name="checkmark-outline" size={20} />
+                ) : (
+                  <Ionicons name="copy-outline" size={20} />
+                )}
               </button>
               <button
                 style={styles.toggleBtn}
@@ -82,6 +99,7 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
                 />
               </button>
             </div>
+          </div>
         ))}
       </div>
     );

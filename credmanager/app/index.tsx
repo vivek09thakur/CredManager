@@ -1,8 +1,8 @@
-import { View } from "react-native";
-import { StyleSheet } from "react-native";
-import CredentialBlocks from "@/components/CredentialBlocks";
+import { View, StyleSheet } from "react-native";
+import CredentialBlocks from "@/components/CredBlocks/CredentialBlocks";
 import { useFonts } from "@expo-google-fonts/poppins/useFonts";
 import { Poppins_400Regular } from "@expo-google-fonts/poppins/400Regular";
+import Nav from "@/components/NavBar/Nav";
 
 const Index = () => {
   let [fontsLoaded] = useFonts({
@@ -48,10 +48,11 @@ const Index = () => {
   ];
 
   if (!fontsLoaded) {
-    return null; // or a loading spinner
+    return null;
   } else {
     return (
       <View style={styles.container}>
+        <Nav />
         <CredentialBlocks credentials={sampleCredentials} />
       </View>
     );
