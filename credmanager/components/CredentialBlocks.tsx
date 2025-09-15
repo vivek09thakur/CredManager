@@ -1,73 +1,87 @@
 import React, { useState } from "react";
-import styles from "./CredentialBlock.module.css";
+import styles from "./CredentialBlock.module";
+import { useFonts } from "@expo-google-fonts/poppins/useFonts";
+import { Poppins_400Regular } from "@expo-google-fonts/poppins/400Regular";
 
 type Credential = {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 };
 
 type CredentialBlocksProps = {
-    credentials: Credential[];
+  credentials: Credential[];
 };
 
 const copyToClipboard = async (text: string) => {
-    if (navigator && "clipboard" in navigator) {
-        await navigator.clipboard.writeText(text);
-    }
+  if (navigator && "clipboard" in navigator) {
+    await navigator.clipboard.writeText(text);
+  }
 };
 
 const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
-    const [showPassword, setShowPassword] = useState<boolean[]>(credentials.map(() => false));
+  const [showPassword, setShowPassword] = useState<boolean[]>(
+    credentials.map(() => false)
+  );
 
-    const toggleShowPassword = (index: number) => {
-        setShowPassword((prev) => {
-            const updated = [...prev];
-            updated[index] = !updated[index];
-            return updated;
-        });
-    };
+  const toggleShowPassword = (index: number) => {
+    setShowPassword((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+  };
 
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  } else {
     return (
-        <div className={styles.container}>
-            {credentials.map((cred, index) => (
-                <div key={index} className={styles.block}>
-                    <div className={styles.label}>Username</div>
-                    <div className={styles.row}>
-                        <span className={styles.text}>{cred.username}</span>
-                        <button
-                            className={styles.copyBtn}
-                            type="button"
-                            onClick={() => copyToClipboard(cred.username)}
-                        >
-                            <span className={styles.copyBtnText}>Copy</span>
-                        </button>
-                    </div>
-                    <div className={styles.label}>Password</div>
-                    <div className={styles.row}>
-                        <span className={styles.text}>
-                            {showPassword[index] ? cred.password : "*".repeat(cred.password.length)}
-                        </span>
-                        <button
-                            className={styles.copyBtn}
-                            type="button"
-                            onClick={() => copyToClipboard(cred.password)}
-                        >
-                            <span className={styles.copyBtnText}>Copy</span>
-                        </button>
-                        <button
-                            className={styles.toggleBtn}
-                            type="button"
-                            onClick={() => toggleShowPassword(index)}
-                        >
-                            <span className={styles.toggleBtnText}>
-                                {showPassword[index] ? "Hide" : "Show"}
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            ))}
-        </div>
+      <div style={styles.container}>
+        {credentials.map((cred, index) => (
+          <div key={index} style={styles.block}>
+            <div style={styles.label}>Username</div>
+            <div style={styles.row}>
+              <span style={styles.text}>{cred.username}</span>
+              <button
+                style={styles.copyBtn}
+                type="button"
+                onClick={() => copyToClipboard(cred.username)}
+              >
+                <span style={styles.copyBtnText}>Copy</span>
+              </button>
+            </div>
+            <div style={styles.label}>Password</div>
+            <div style={styles.row}>
+              <span style={styles.text}>
+                {showPassword[index]
+                  ? cred.password
+                  : "*".repeat(cred.password.length)}
+              </span>
+              <button
+                style={styles.copyBtn}
+                type="button"
+                onClick={() => copyToClipboard(cred.password)}
+              >
+                <span style={styles.copyBtnText}>Copy</span>
+              </button>
+              <button
+                style={styles.toggleBtn}
+                type="button"
+                onClick={() => toggleShowPassword(index)}
+              >
+                <span style={styles.toggleBtnText}>
+                  {showPassword[index] ? "Hide" : "Show"}
+                </span>
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     );
+  }
 };
 
 export default CredentialBlocks;
