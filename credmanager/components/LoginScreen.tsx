@@ -1,207 +1,126 @@
+import { Poppins_400Regular, useFonts } from "@expo-google-fonts/poppins";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
-    View,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
     useWindowDimensions,
-    Platform,
-    KeyboardAvoidingView,
-    ScrollView,
+    View,
 } from "react-native";
-import { useFonts } from "@expo-google-fonts/poppins/useFonts";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins/400Regular";
 import { useAuth } from "../components/AuthContext";
 
 const ACCENT = "#c8aef1ff";
 const BG = "#202123";
 const FG = "#fff";
 const LABEL = "#bdbdbd";
-const INPUT_BG = "#26282b";
+const INPUT_BG = "#2b2d31";
+
+const Eye = (props: { size: number; color: string }) => (
+    <Ionicons name="eye" size={props.size} color={props.color} />
+);
+const EyeOff = (props: { size: number; color: string }) => (
+    <Ionicons name="eye-off" size={props.size} color={props.color} />
+);
 
 const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
-    const { login } = useAuth();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    let [fontsLoaded] = useFonts({ Poppins_400Regular });
-    const { width } = useWindowDimensions();
+  const { login } = useAuth();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [fontsLoaded] = useFonts({ Poppins_400Regular });
+  const { width } = useWindowDimensions();
 
-    if (!fontsLoaded) return null;
+  if (!fontsLoaded) return null;
 
-    const handleLogin = () => {
-        if (!login(username, password)) {
-            setError("Invalid credentials");
-        }
-    };
+  const handleLogin = () => {
+    if (!login(username, password)) setError("Invalid credentials");
+  };
 
-    // Responsive card width
-    const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "95%";
-    const inputWidth = width > 500 ? 400 : width > 340 ? 280 : "95%";
+  const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "90%";
 
-    return (
-        <KeyboardAvoidingView
-            style={styles.flex}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+  return (
+    <KeyboardAvoidingView
+      className="flex-1 bg-[#202123]"
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center", paddingVertical: 32 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View 
+          className="bg-[#202123] p-5 rounded-lg elevation-4"
+          style={{ width: cardWidth }}
         >
-            <ScrollView
-                contentContainerStyle={styles.scrollContainer}
-                keyboardShouldPersistTaps="handled"
-            >
-                <View style={styles.container}>
-                    <View style={[styles.card, { width: cardWidth }]}>
-                        <Text style={styles.title}>Sign in</Text>
-                        <Text style={styles.subtitle}>to BITS Cred Manager</Text>
-                        <View style={styles.inputWrap}>
-                            <Text style={styles.label}>Username</Text>
-                            <TextInput
-                                placeholder="Enter your username"
-                                placeholderTextColor="#bbb"
-                                value={username}
-                                onChangeText={setUsername}
-                                style={[styles.input, { width: inputWidth }]}
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                textContentType="username"
-                                returnKeyType="next"
-                            />
-                        </View>
-                        <View style={styles.inputWrap}>
-                            <Text style={styles.label}>Password</Text>
-                            <TextInput
-                                placeholder="Enter your password"
-                                placeholderTextColor="#bbb"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                                style={[styles.input, { width: inputWidth }]}
-                                textContentType="password"
-                                returnKeyType="done"
-                            />
-                        </View>
-                        {error ? <Text style={styles.error}>{error}</Text> : null}
-                        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                            <Text style={styles.buttonText}>Login</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.link} onPress={onSwitch}>
-                            <Text style={styles.linkText}>Create account</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </ScrollView>
-        </KeyboardAvoidingView>
-    );
-};
+          <Text className="text-2xl text-white font-bold mb-5 text-center font-poppins">
+            Login
+          </Text>
 
-const styles = StyleSheet.create({
-    flex: {
-        flex: 1,
-        backgroundColor: BG,
-    },
-    scrollContainer: {
-        flexGrow: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: BG,
-        minHeight: "100%",
-        paddingVertical: 24,
-    },
-    container: {
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    card: {
-        // padding: 16,
-        borderRadius: 10,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 8,
-        elevation: 2,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        // backgroundColor: "#232428",
-        // padding: 16,
-    },
-    title: {
-        fontSize: 24,
-        color: FG,
-        fontWeight: "bold",
-        marginBottom: 2,
-        letterSpacing: 0.5,
-        fontFamily: "Poppins_400Regular",
-    },
-    subtitle: {
-        fontSize: 15,
-        color: LABEL,
-        marginBottom: 18,
-        fontFamily: "Poppins_400Regular",
-    },
-    inputWrap: {
-        width: "100%",
-        marginBottom: 10,
-    },
-    label: {
-        color: LABEL,
-        fontSize: 13,
-        marginBottom: 3,
-        fontWeight: "bold",
-        letterSpacing: 0.2,
-        fontFamily: "Poppins_400Regular",
-    },
-    input: {
-        backgroundColor: INPUT_BG,
-        borderWidth: 1,
-        borderColor: "#444",
-        color: FG,
-        padding: 12,
-        borderRadius: 6,
-        fontSize: 16,
-        fontFamily: "Poppins_400Regular",
-        alignSelf: "stretch",
-        width: "100%",
-    },
-    error: {
-        color: "#ff4d4f",
-        marginBottom: 10,
-        fontWeight: "bold",
-        alignSelf: "flex-start",
-    },
-    button: {
-        backgroundColor: ACCENT,
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 6,
-        marginTop: 8,
-        marginBottom: 8,
-        width: "100%",
-        alignItems: "center",
-        shadowColor: ACCENT,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-    },
-    buttonText: {
-        color: FG,
-        fontWeight: "bold",
-        fontSize: 18,
-        letterSpacing: 1,
-        fontFamily: "Poppins_400Regular",
-    },
-    link: {
-        marginTop: 8,
-        width: "100%",
-        alignItems: "flex-end",
-    },
-    linkText: {
-        color: ACCENT,
-        fontSize: 15,
-        textDecorationLine: "underline",
-        fontWeight: "bold",
-        fontFamily: "Poppins_400Regular",
-    },
-});
+          <View className="mb-4">
+            <Text className="text-[#bdbdbd] text-xs mb-1 font-poppins">Username</Text>
+            <TextInput
+              placeholder="Enter username"
+              placeholderTextColor="#777"
+              value={username}
+              onChangeText={setUsername}
+              className="bg-[#2b2d31] border border-[#333] text-white p-3 rounded text-base font-poppins"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+
+          <View className="mb-4">
+            <Text className="text-[#bdbdbd] text-xs mb-1 font-poppins">Password</Text>
+            <View className="flex-row items-center bg-[#2b2d31] border border-[#333] rounded">
+              <TextInput
+                placeholder="Enter password"
+                placeholderTextColor="#777"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                className="flex-1 text-white p-3 text-base font-poppins"
+              />
+              <TouchableOpacity
+                onPress={() => setShowPassword((prev) => !prev)}
+                className="px-3"
+              >
+                {showPassword ? (
+                  <EyeOff size={20} color={LABEL} />
+                ) : (
+                  <Eye size={20} color={LABEL} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {error ? (
+            <Text className="text-[#ff4d4f] mb-2 font-bold font-poppins">
+              {error}
+            </Text>
+          ) : null}
+
+          <TouchableOpacity 
+            className="bg-[#c8aef1ff] py-3 rounded items-center mb-3"
+            onPress={handleLogin}
+          >
+            <Text className="text-white text-base font-bold font-poppins">
+              Sign In
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity className="items-center" onPress={onSwitch}>
+            <Text className="text-[#c8aef1ff] text-sm underline font-poppins">
+              Create Account
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+};
 
 export default LoginScreen;

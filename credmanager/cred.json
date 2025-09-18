@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Wipro Email",
+    "description": "Work email account",
+    "username": "vivek.kumar9@wipro.com",
+    "password": "Th@kur@090909##",
+    "link": null
+  },
+  {
+    "title": "BITS Credentials",
+    "description": "Student ID details",
+    "username": "VIVEK KUMAR (ID: 202419TW021)",
+    "password": "-",
+    "link": null
+  },
+  {
+    "title": "BITS Email",
+    "description": "Official BITS Pilani email",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Wp$29122004",
+    "link": null
+  },
+  {
+    "title": "Teams",
+    "description": "Microsoft Teams credentials",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Wilp@123",
+    "link": null
+  },
+  {
+    "title": "eLearning Portal",
+    "description": "Learning platform",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Vivek@090909",
+    "link": "https://elearn.bits-pilani.ac.in"
+  },
+  {
+    "title": "OpenAthens",
+    "description": "Library login",
+    "username": "bitsvkumar049",
+    "password": "Vivek@090909##",
+    "link": "https://my.openathens.net/app/researchers"
+  },
+  {
+    "title": "Taxila Portal",
+    "description": "Assignments and submissions",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Vivek@090909",
+    "link": "https://taxila-aws.bits-pilani.ac.in"
+  },
+  {
+    "title": "Lab URL - SEM1",
+    "description": "Cloud Labs",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Vivek@090909",
+    "link": "https://cloudlabs.nuvepro.com"
+  },
+  {
+    "title": "Lab URL - SEM2",
+    "description": "OSHA Labs",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Vivek@090909",
+    "link": "https://osha-bits.codeargo.net/booking"
+  },
+  {
+    "title": "Exam Portal (Mettl)",
+    "description": "Mid-Sem Exam Login",
+    "username": "202419tw021@wilp.bits-pilani.ac.in",
+    "password": "Vivek@090909",
+    "link": "https://certification.mettl.com/wipro-bits-wilp/applicant/login"
+  }
+]

@@ -1,10 +1,10 @@
 
 import { Stack } from "expo-router";
-import { AuthProvider, useAuth } from "../components/AuthContext";
 import React, { useState } from "react";
+import { AuthProvider, useAuth } from "../components/AuthContext";
 import LoginScreen from "../components/LoginScreen";
 import RegisterScreen from "../components/RegisterScreen";
-
+import "../global.css";
 
 function AuthGate() {
   const { user } = useAuth();

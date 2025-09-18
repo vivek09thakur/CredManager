@@ -1,36 +1,40 @@
-
+import { Poppins_400Regular, useFonts } from "@expo-google-fonts/poppins";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
-  View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   useWindowDimensions,
-  Platform,
-  KeyboardAvoidingView,
-  ScrollView,
+  View,
 } from "react-native";
-import { useFonts } from "@expo-google-fonts/poppins/useFonts";
-import { Poppins_400Regular } from "@expo-google-fonts/poppins/400Regular";
 import { useAuth } from "../components/AuthContext";
 
-
-const ACCENT = "#c8aef1ff"; // from block
-const CARD_BG = "#23262b";
+const ACCENT = "#c8aef1ff";
 const BG = "#202123";
 const FG = "#fff";
 const LABEL = "#bdbdbd";
-const INPUT_BG = "#26282b";
-const BORDER = "#c8aef1ff";
+const INPUT_BG = "#2b2d31";
+const Eye = (props: { size: number; color: string }) => (
+    <Ionicons name="eye" size={props.size} color={props.color} />
+);
+const EyeOff = (props: { size: number; color: string }) => (
+    <Ionicons name="eye-off" size={props.size} color={props.color} />
+);
 
 const RegisterScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  let [fontsLoaded] = useFonts({ Poppins_400Regular });
+  const [showPassword, setShowPassword] = useState(false);
+  const [fontsLoaded] = useFonts({ Poppins_400Regular });
   const { width } = useWindowDimensions();
+
   if (!fontsLoaded) return null;
 
   const handleRegister = () => {
@@ -39,9 +43,7 @@ const RegisterScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
     }
   };
 
-  // Responsive card width
-  const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "95%";
-  const inputWidth = width > 500 ? 400 : width > 340 ? 280 : "95%";
+  const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "90%";
 
   return (
     <KeyboardAvoidingView
@@ -52,151 +54,133 @@ const RegisterScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
         contentContainerStyle={styles.scrollContainer}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.container}>
-          <View style={[styles.card, { width: cardWidth }]}> {/* visually flat, just for width */}
-            <Text style={styles.title}>Create your account</Text>
-            <Text style={styles.subtitle}>for BITS Cred Manager</Text>
-            <View style={styles.inputWrap}>
-              <Text style={styles.label}>Username</Text>
-              <TextInput
-                placeholder="Choose a username"
-                placeholderTextColor="#bbb"
-                value={username}
-                onChangeText={setUsername}
-                style={[styles.input, { width: inputWidth }]}
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="username"
-                returnKeyType="next"
-              />
-            </View>
-            <View style={styles.inputWrap}>
-              <Text style={styles.label}>Password</Text>
+        <View style={[styles.card, { width: cardWidth }]}>
+          <Text style={styles.title}>Create Account</Text>
+
+          <View style={styles.inputWrap}>
+            <Text style={styles.label}>Username</Text>
+            <TextInput
+              placeholder="Choose a username"
+              placeholderTextColor="#777"
+              value={username}
+              onChangeText={setUsername}
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          </View>
+
+          <View style={styles.inputWrap}>
+            <Text style={styles.label}>Password</Text>
+            <View style={styles.passwordContainer}>
               <TextInput
                 placeholder="Create a password"
-                placeholderTextColor="#bbb"
+                placeholderTextColor="#777"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry
-                style={[styles.input, { width: inputWidth }]}
-                textContentType="password"
-                returnKeyType="done"
+                secureTextEntry={!showPassword}
+                style={[styles.input, { flex: 1 }]}
               />
+              <TouchableOpacity
+                onPress={() => setShowPassword((prev) => !prev)}
+                style={styles.eyeIcon}
+              >
+                {showPassword ? (
+                  <EyeOff size={20} color={LABEL} />
+                ) : (
+                  <Eye size={20} color={LABEL} />
+                )}
+              </TouchableOpacity>
             </View>
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-            <TouchableOpacity style={styles.button} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Sign up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.link} onPress={onSwitch}>
-              <Text style={styles.linkText}>Already have an account?</Text>
-            </TouchableOpacity>
           </View>
+
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+
+          <TouchableOpacity style={styles.button} onPress={handleRegister}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.link} onPress={onSwitch}>
+            <Text style={styles.linkText}>Already have an account?</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
 
-
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-    backgroundColor: BG,
-  },
+  flex: { flex: 1, backgroundColor: BG },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: BG,
-    minHeight: "100%",
-    paddingVertical: 24,
-  },
-  container: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingVertical: 32,
   },
   card: {
+    backgroundColor: "#1c1d20",
+    padding: 20,
     borderRadius: 10,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    elevation: 4,
   },
   title: {
     fontSize: 24,
     color: FG,
     fontWeight: "bold",
-    marginBottom: 2,
-    letterSpacing: 0.5,
+    marginBottom: 20,
+    textAlign: "center",
     fontFamily: "Poppins_400Regular",
   },
-  subtitle: {
-    fontSize: 15,
-    color: LABEL,
-    marginBottom: 18,
-    fontFamily: "Poppins_400Regular",
-  },
-  inputWrap: {
-    width: "100%",
-    marginBottom: 10,
-  },
+  inputWrap: { marginBottom: 15 },
   label: {
     color: LABEL,
     fontSize: 13,
-    marginBottom: 3,
-    fontWeight: "bold",
-    letterSpacing: 0.2,
+    marginBottom: 5,
     fontFamily: "Poppins_400Regular",
   },
   input: {
     backgroundColor: INPUT_BG,
     borderWidth: 1,
-    borderColor: "#444",
+    borderColor: "#333",
     color: FG,
     padding: 12,
     borderRadius: 6,
     fontSize: 16,
     fontFamily: "Poppins_400Regular",
-    alignSelf: "stretch",
-    width: "100%",
   },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: INPUT_BG,
+    borderWidth: 1,
+    borderColor: "#333",
+    borderRadius: 6,
+  },
+  eyeIcon: { paddingHorizontal: 12 },
   error: {
     color: "#ff4d4f",
     marginBottom: 10,
     fontWeight: "bold",
-    alignSelf: "flex-start",
+    fontFamily: "Poppins_400Regular",
   },
   button: {
     backgroundColor: ACCENT,
     paddingVertical: 12,
-    paddingHorizontal: 32,
     borderRadius: 6,
-    marginTop: 8,
-    marginBottom: 8,
-    width: "100%",
     alignItems: "center",
-    shadowColor: ACCENT,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.10,
-    shadowRadius: 4,
+    marginBottom: 12,
   },
   buttonText: {
     color: FG,
+    fontSize: 16,
     fontWeight: "bold",
-    fontSize: 18,
-    letterSpacing: 1,
     fontFamily: "Poppins_400Regular",
   },
-  link: {
-    marginTop: 8,
-    width: "100%",
-    alignItems: "flex-end",
-  },
+  link: { alignItems: "center" },
   linkText: {
     color: ACCENT,
-    fontSize: 15,
+    fontSize: 14,
     textDecorationLine: "underline",
-    fontWeight: "bold",
     fontFamily: "Poppins_400Regular",
   },
 });
