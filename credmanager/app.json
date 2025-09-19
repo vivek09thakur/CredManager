@@ -1,5 +1,9 @@
 {
   "expo": {
+    "web": {
+       "bundler": "metro"
+    
+    },
     "name": "credmanager",
     "slug": "credmanager",
     "version": "1.0.0",
@@ -22,10 +26,7 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.vivek09thakur.credmanager"
     },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
+
     "plugins": [
       "expo-router",
       [
