@@ -1,85 +1,52 @@
-# BITS-Credentials
+# Welcome to your Expo app 👋
 
-## Wipro Email
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-Email : vivek.kumar9@wipro.com
+https://expo.dev/artifacts/eas/8f6qJewwjJDe1uMcEzbwMr.apk
 
-Password : Th@kur@090909##
+## Get started
 
-## Credentials
+1. Install dependencies
 
-NAME: VIVEK KUMAR
+   ```bash
+   npm install
+   ```
 
-ID : 202419TW021
+2. Start the app
 
----
+   ```bash
+   npx expo start
+   ```
 
-## Email
+In the output, you'll find options to open the app in a
 
-Email : 202419tw021@wilp.bits-pilani.ac.in
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-Password : Wp$29122004
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
----
+## Get a fresh project
 
-## Teams Credentials:
+When you're ready, run:
 
-Email : 202419tw021@wilp.bits-pilani.ac.in
+```bash
+npm run reset-project
+```
 
-Password : Wilp@123
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
----
+## Learn more
 
-## [eLearning Portal](https://elearn.bits-pilani.ac.in)
+To learn more about developing your project with Expo, look at the following resources:
 
-User ID: 202419tw021@wilp.bits-pilani.ac.in 
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-Password: Vivek@090909
+## Join the community
 
----
+Join our community of developers creating universal apps.
 
-## [OpenAthens Credentials](https://my.openathens.net/app/researchers)
-
-Username: bitsvkumar049
-
-Password: Vivek@090909##
-
----
-
-## [Taxila Portal](https://taxila-aws.bits-pilani.ac.in/mod/assign/view.php?id=234024)
-
-User ID: 202419tw021@wilp.bits-pilani.ac.in 
-
-Password: Vivek@090909
-
----
-
-
-## Lab URL
-
- - [SEM1](https://cloudlabs.nuvepro.com)
- - [SEM2](https://osha-bits.codeargo.net/booking)
-
-Mercer | Metti (Exam Credentials):
-
-username: 202419tw021@wilp.bits-pilani.ac.in
-password: Vivek@090909
-
-Mid-Sem: https://certification.mettl.com/wipro-bits-wilp/applicant/login
-
-
-## Exam Terms
-
-1. EC1 - Online quizzes labs
-2. EC2 - Mid-sem  (Chug gye guru)S
-3. EC3 - Finals
-
-## AVOID -
-
-1. E-Grade (not more than 2)
-2. Doing class from phone
-3. Dressing inappropriate during class
-
-## MUST -
-
-1. Attendance > 65%
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
