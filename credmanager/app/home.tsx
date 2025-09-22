@@ -63,28 +63,28 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-900">
+      <View className="flex-1 justify-center items-center bg-[#202124]">
         <Text className="text-gray-400 text-lg font-poppins">Loading...</Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-gray-900">
+    <View className="flex-1 bg-[#202124]">
       <CredentialBlocks credentials={credentials} />
       
       {/* Action Buttons */}
       <View className="absolute bottom-6 right-6 flex-row">
         <TouchableOpacity
           onPress={handleImportJSON}
-          className="bg-purple-600 w-12 h-12 rounded-full justify-center items-center mr-4"
+          className="bg-purple-400 w-12 h-12 rounded-full justify-center items-center mr-4"
         >
           <Ionicons name="document-outline" size={24} color="white" />
         </TouchableOpacity>
         
         <TouchableOpacity
           onPress={() => setShowAddModal(true)}
-          className="bg-purple-600 w-12 h-12 rounded-full justify-center items-center"
+          className="bg-purple-400 w-12 h-12 rounded-full justify-center items-center"
         >
           <Ionicons name="add" size={24} color="white" />
         </TouchableOpacity>

@@ -67,7 +67,7 @@ export default function AddCredentialModal({
       onRequestClose={onClose}
     >
       <View className="flex-1 justify-end">
-        <View className="bg-gray-800 rounded-t-3xl p-6 h-4/5">
+        <View className="bg-[#202124] rounded-t-3xl p-6 h-4/5">
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             className="flex-1"
@@ -80,7 +80,7 @@ export default function AddCredentialModal({
                 onPress={onClose}
                 className="p-2 rounded-full bg-gray-700"
               >
-                <Ionicons name="close" size={24} color="#9CA3AF" />
+                <Ionicons name="close" size={24} color="#bcbcbcff" />
               </TouchableOpacity>
             </View>
 
@@ -143,7 +143,7 @@ export default function AddCredentialModal({
                     <Ionicons
                       name={showPassword ? "eye-off" : "eye"}
                       size={24}
-                      color="#9CA3AF"
+                      color="#bcbcbcff"
                     />
                   </TouchableOpacity>
                 </View>
@@ -168,8 +168,8 @@ export default function AddCredentialModal({
               disabled={!title || !username || !password}
               className={`py-4 rounded-xl items-center ${
                 !title || !username || !password
-                  ? "bg-purple-600/50"
-                  : "bg-purple-600"
+                  ? "bg-purple-400/50"
+                  : "bg-purple-400"
               }`}
             >
               <Text className="text-white text-lg font-poppins-semibold">

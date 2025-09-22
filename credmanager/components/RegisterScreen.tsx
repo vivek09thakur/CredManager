@@ -66,7 +66,7 @@ const RegisterScreen: React.FC = () => {
 
   return (
     <KeyboardAvoidingView
-      className="flex-1 bg-gray-900"
+      className="flex-1 bg-[#202124]"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
@@ -93,7 +93,7 @@ const RegisterScreen: React.FC = () => {
                 setUsername(text);
                 setError("");
               }}
-              className="bg-gray-800 border border-gray-700 text-white p-4 rounded-xl text-base font-poppins text-left"
+              className="bg-[#17181a] border border-[rgba(255,255,255,0.1)] text-white p-4 rounded-xl text-base font-poppins text-left"
               autoCapitalize="none"
               autoCorrect={false}
               selectionColor="#8B5FBF"
@@ -101,7 +101,7 @@ const RegisterScreen: React.FC = () => {
             />
           </View>
           <View className="mb-6">
-            <View className="flex-row items-center bg-gray-800 border border-gray-700 rounded-xl">
+            <View className="flex-row items-center bg-[#17181a] border border-[rgba(255,255,255,0.3)] rounded-xl">
               <TextInput
                 placeholder="Password"
                 placeholderTextColor="#9CA3AF"
@@ -136,7 +136,7 @@ const RegisterScreen: React.FC = () => {
             </View>
           ) : null}
           <TouchableOpacity
-            className={`bg-purple-600 py-4 rounded-xl items-center mb-6 shadow-lg ${
+            className={`bg-[#6d6dd6] py-4 rounded-xl items-center mb-6 shadow-lg ${
               isLoading ? "opacity-70" : "active:scale-95"
             }`}
             onPress={handleRegister}
