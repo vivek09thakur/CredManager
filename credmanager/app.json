@@ -23,8 +23,9 @@
       "package": "com.vivek09thakur.credmanager"
     },
     "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+     
+      "bundler": "metro"
+    
     },
     "plugins": [
       "expo-router",
