@@ -1,29 +1,12 @@
 
 import { Stack } from "expo-router";
-import React, { useState } from "react";
-import { AuthProvider, useAuth } from "../components/AuthContext";
-import LoginScreen from "../components/LoginScreen";
-import RegisterScreen from "../components/RegisterScreen";
 import "../global.css";
-
-function AuthGate() {
-  const { user } = useAuth();
-  const [showRegister, setShowRegister] = useState(false);
-
-  if (!user) {
-    return showRegister ? (
-      <RegisterScreen onSwitch={() => setShowRegister(false)} />
-    ) : (
-      <LoginScreen onSwitch={() => setShowRegister(true)} />
-    );
-  }
-  return <Stack screenOptions={{ headerShown: false }} />;
-}
+import { AuthProvider } from "@/components/AuthContext";
 
 export default function RootLayout() {
   return (
     <AuthProvider>
-      <AuthGate />
+      <Stack screenOptions={{ headerShown: false }} />
     </AuthProvider>
   );
 }

@@ -1,38 +1,43 @@
-import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, useFonts } from "@expo-google-fonts/poppins";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  useFonts,
+} from "@expo-google-fonts/poppins";
+import { useRouter } from "expo-router";
 import { useAuth } from "../components/AuthContext";
 
-const Eye = (props: { size: number; color: string }) => (
-    <Ionicons name="eye" size={props.size} color={props.color} />
+const Eye = ({ size, color }: { size: number; color: string }) => (
+  <Ionicons name="eye" size={size} color={color} />
 );
-const EyeOff = (props: { size: number; color: string }) => (
-    <Ionicons name="eye-off" size={props.size} color={props.color} />
+const EyeOff = ({ size, color }: { size: number; color: string }) => (
+  <Ionicons name="eye-off" size={size} color={color} />
 );
 
-const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
+const LoginScreen: React.FC = () => {
+  const router = useRouter();
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [fontsLoaded] = useFonts({ 
+  const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
-    Poppins_600SemiBold
+    Poppins_600SemiBold,
   });
-  const { width } = useWindowDimensions();
 
   if (!fontsLoaded) return null;
 
@@ -41,20 +46,23 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
       setError("Please fill in all fields");
       return;
     }
-
     setIsLoading(true);
     setError("");
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    if (!login(username, password)) {
-      setError("Invalid username or password");
+    try {
+      const success = await login(username, password);
+      if (success) {
+        router.push("/home");
+      } else {
+        setError("Invalid username or password");
+      }
+    } catch (error) {
+      setError("An error occurred during login");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
-
-  const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "90%";
 
   return (
     <KeyboardAvoidingView
@@ -63,48 +71,39 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <ScrollView
-        contentContainerClassName="flex-grow justify-center items-center py-8 px-4"
+        contentContainerClassName="flex-grow justify-center"
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <View 
-          className="bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-700"
-          style={{ width: cardWidth }}
-        >
-          {/* Header */}
-          <View className="items-center mb-8">
-            <Text className="text-3xl text-white font-bold mb-2 font-poppins-semibold">
-              Welcome Back
-            </Text>
-            <Text className="text-gray-400 text-base font-poppins">
-              Sign in to your account
-            </Text>
-          </View>
-
-          {/* Username Field */}
+        <View className="items-center pb-12 px-8">
+          <Text className="text-5xl text-white font-bold mb-2 font-poppins-semibold">
+            CredManager
+          </Text>
+          <Text className="text-gray-400 text-lg font-poppins">
+            Secure credential management
+          </Text>
+        </View>
+        <View className="px-8">
           <View className="mb-6">
-            <Text className="text-gray-300 text-sm mb-3 font-poppins-medium">Username</Text>
             <TextInput
-              placeholder="Enter your username"
+              placeholder="Username"
               placeholderTextColor="#9CA3AF"
               value={username}
               onChangeText={(text) => {
                 setUsername(text);
                 setError("");
               }}
-              className="bg-gray-700 border border-gray-600 text-white p-4 rounded-xl text-base font-poppins"
+              className="bg-gray-800 border border-gray-700 text-white p-4 rounded-xl text-base font-poppins text-left"
               autoCapitalize="none"
               autoCorrect={false}
               selectionColor="#8B5FBF"
+              textAlign="left"
             />
           </View>
-
-          {/* Password Field */}
           <View className="mb-6">
-            <Text className="text-gray-300 text-sm mb-3 font-poppins-medium">Password</Text>
-            <View className="flex-row items-center bg-gray-700 border border-gray-600 rounded-xl">
+            <View className="flex-row items-center bg-gray-800 border border-gray-700 rounded-xl">
               <TextInput
-                placeholder="Enter your password"
+                placeholder="Password"
                 placeholderTextColor="#9CA3AF"
                 value={password}
                 onChangeText={(text) => {
@@ -112,8 +111,9 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
                   setError("");
                 }}
                 secureTextEntry={!showPassword}
-                className="flex-1 text-white p-4 text-base font-poppins"
+                className="flex-1 text-white p-4 text-base font-poppins text-left"
                 selectionColor="#8B5FBF"
+                textAlign="left"
               />
               <TouchableOpacity
                 onPress={() => setShowPassword((prev) => !prev)}
@@ -128,8 +128,6 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* Error Message */}
           {error ? (
             <View className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-4">
               <Text className="text-red-400 text-sm font-poppins-medium text-center">
@@ -137,9 +135,7 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
               </Text>
             </View>
           ) : null}
-
-          {/* Login Button */}
-          <TouchableOpacity 
+          <TouchableOpacity
             className={`bg-purple-600 py-4 rounded-xl items-center mb-6 shadow-lg ${
               isLoading ? "opacity-70" : "active:scale-95"
             }`}
@@ -151,24 +147,23 @@ const LoginScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
               {isLoading ? "Signing In..." : "Sign In"}
             </Text>
           </TouchableOpacity>
-
-          {/* Switch to Sign Up */}
-          <View className="flex-row justify-center items-center">
-            <Text className="text-gray-400 text-sm font-poppins">
-              Don't have an account?{" "}
+          <View className="flex-row justify-center items-center pt-4">
+            <Text className="text-gray-400 text-base font-poppins">
+              New user?{" "}
             </Text>
-            <TouchableOpacity onPress={onSwitch} activeOpacity={0.7}>
-              <Text className="text-purple-400 text-sm font-poppins-medium underline">
+            <TouchableOpacity
+              onPress={() => router.push("/register")}
+              activeOpacity={0.7}
+            >
+              <Text className="text-purple-400 text-base font-poppins-medium underline">
                 Create Account
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* Additional Info */}
-        <View className="mt-8 px-4">
-          <Text className="text-gray-500 text-xs text-center font-poppins">
-            Secure your credentials with advanced encryption
+        <View className="absolute bottom-8 left-0 right-0">
+          <Text className="text-gray-600 text-sm text-center font-poppins">
+            An app by PINAKA group of developers
           </Text>
         </View>
       </ScrollView>

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "strict": true,
     "paths": {
       "@/*": [
@@ -14,7 +16,8 @@
     "./components/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "nativewind-env.d.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

@@ -1,188 +1,174 @@
-import { Poppins_400Regular, useFonts } from "@expo-google-fonts/poppins";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
+import { 
+  KeyboardAvoidingView, 
+  Platform, 
+  ScrollView, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  View 
 } from "react-native";
+import { 
+  Poppins_400Regular, 
+  Poppins_500Medium, 
+  Poppins_600SemiBold, 
+  useFonts 
+} from "@expo-google-fonts/poppins";
+import { useRouter } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useAuth } from "../components/AuthContext";
 
-const ACCENT = "#c8aef1ff";
-const BG = "#202123";
-const FG = "#fff";
-const LABEL = "#bdbdbd";
-const INPUT_BG = "#2b2d31";
-const Eye = (props: { size: number; color: string }) => (
-    <Ionicons name="eye" size={props.size} color={props.color} />
+const Eye = ({ size, color }: { size: number; color: string }) => (
+  <Ionicons name="eye" size={size} color={color} />
 );
-const EyeOff = (props: { size: number; color: string }) => (
-    <Ionicons name="eye-off" size={props.size} color={props.color} />
+const EyeOff = ({ size, color }: { size: number; color: string }) => (
+  <Ionicons name="eye-off" size={size} color={color} />
 );
 
-const RegisterScreen: React.FC<{ onSwitch: () => void }> = ({ onSwitch }) => {
+const RegisterScreen: React.FC = () => {
+  const router = useRouter();
   const { register } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [fontsLoaded] = useFonts({ Poppins_400Regular });
-  const { width } = useWindowDimensions();
+  const [isLoading, setIsLoading] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
+  });
 
   if (!fontsLoaded) return null;
 
-  const handleRegister = () => {
-    if (!register(username, password)) {
-      setError("Username already exists");
+  const handleRegister = async () => {
+    if (!username.trim() || !password.trim()) {
+      setError("Please fill in all fields");
+      return;
+    }
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      const success = await register(username, password);
+      if (success) {
+        router.push("/home");
+      } else {
+        setError("Username already exists");
+      }
+    } catch (error) {
+      setError("An error occurred during registration");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const cardWidth = width > 500 ? 400 : width > 340 ? 320 : "90%";
-
   return (
     <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      className="flex-1 bg-gray-900"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <ScrollView
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerClassName="flex-grow justify-center"
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        <View style={[styles.card, { width: cardWidth }]}>
-          <Text style={styles.title}>Create Account</Text>
-
-          <View style={styles.inputWrap}>
-            <Text style={styles.label}>Username</Text>
+        <View className="items-center pb-12 px-8">
+          <Text className="text-5xl text-white font-bold mb-2 font-poppins-semibold">
+            CredManager
+          </Text>
+          <Text className="text-gray-400 text-lg font-poppins">
+            Create your account
+          </Text>
+        </View>
+        <View className="px-8">
+          <View className="mb-6">
             <TextInput
-              placeholder="Choose a username"
-              placeholderTextColor="#777"
+              placeholder="Username"
+              placeholderTextColor="#9CA3AF"
               value={username}
-              onChangeText={setUsername}
-              style={styles.input}
+              onChangeText={(text) => {
+                setUsername(text);
+                setError("");
+              }}
+              className="bg-gray-800 border border-gray-700 text-white p-4 rounded-xl text-base font-poppins text-left"
               autoCapitalize="none"
               autoCorrect={false}
+              selectionColor="#8B5FBF"
+              textAlign="left"
             />
           </View>
-
-          <View style={styles.inputWrap}>
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.passwordContainer}>
+          <View className="mb-6">
+            <View className="flex-row items-center bg-gray-800 border border-gray-700 rounded-xl">
               <TextInput
-                placeholder="Create a password"
-                placeholderTextColor="#777"
+                placeholder="Password"
+                placeholderTextColor="#9CA3AF"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  setError("");
+                }}
                 secureTextEntry={!showPassword}
-                style={[styles.input, { flex: 1 }]}
+                className="flex-1 text-white p-4 text-base font-poppins text-left"
+                selectionColor="#8B5FBF"
+                textAlign="left"
               />
               <TouchableOpacity
                 onPress={() => setShowPassword((prev) => !prev)}
-                style={styles.eyeIcon}
+                className="px-4 py-3"
+                activeOpacity={0.7}
               >
                 {showPassword ? (
-                  <EyeOff size={20} color={LABEL} />
+                  <EyeOff size={22} color="#9CA3AF" />
                 ) : (
-                  <Eye size={20} color={LABEL} />
+                  <Eye size={22} color="#9CA3AF" />
                 )}
               </TouchableOpacity>
             </View>
           </View>
-
-          {error ? <Text style={styles.error}>{error}</Text> : null}
-
-          <TouchableOpacity style={styles.button} onPress={handleRegister}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+          {error ? (
+            <View className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-4">
+              <Text className="text-red-400 text-sm font-poppins-medium text-center">
+                {error}
+              </Text>
+            </View>
+          ) : null}
+          <TouchableOpacity
+            className={`bg-purple-600 py-4 rounded-xl items-center mb-6 shadow-lg ${
+              isLoading ? "opacity-70" : "active:scale-95"
+            }`}
+            onPress={handleRegister}
+            disabled={isLoading}
+            activeOpacity={0.8}
+          >
+            <Text className="text-white text-lg font-poppins-semibold">
+              {isLoading ? "Creating Account..." : "Sign Up"}
+            </Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.link} onPress={onSwitch}>
-            <Text style={styles.linkText}>Already have an account?</Text>
-          </TouchableOpacity>
+          <View className="flex-row justify-center items-center pt-4">
+            <Text className="text-gray-400 text-base font-poppins">
+              Already have an account?{" "}
+            </Text>
+            <TouchableOpacity
+              onPress={() => router.push("/")}
+              activeOpacity={0.7}
+            >
+              <Text className="text-purple-400 text-base font-poppins-medium underline">
+                Sign In
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View className="absolute bottom-8 left-0 right-0">
+          <Text className="text-gray-600 text-sm text-center font-poppins">
+            An app by PINAKA group of developers
+          </Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: BG },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 32,
-  },
-  card: {
-    backgroundColor: "#1c1d20",
-    padding: 20,
-    borderRadius: 10,
-    elevation: 4,
-  },
-  title: {
-    fontSize: 24,
-    color: FG,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    fontFamily: "Poppins_400Regular",
-  },
-  inputWrap: { marginBottom: 15 },
-  label: {
-    color: LABEL,
-    fontSize: 13,
-    marginBottom: 5,
-    fontFamily: "Poppins_400Regular",
-  },
-  input: {
-    backgroundColor: INPUT_BG,
-    borderWidth: 1,
-    borderColor: "#333",
-    color: FG,
-    padding: 12,
-    borderRadius: 6,
-    fontSize: 16,
-    fontFamily: "Poppins_400Regular",
-  },
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: INPUT_BG,
-    borderWidth: 1,
-    borderColor: "#333",
-    borderRadius: 6,
-  },
-  eyeIcon: { paddingHorizontal: 12 },
-  error: {
-    color: "#ff4d4f",
-    marginBottom: 10,
-    fontWeight: "bold",
-    fontFamily: "Poppins_400Regular",
-  },
-  button: {
-    backgroundColor: ACCENT,
-    paddingVertical: 12,
-    borderRadius: 6,
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  buttonText: {
-    color: FG,
-    fontSize: 16,
-    fontWeight: "bold",
-    fontFamily: "Poppins_400Regular",
-  },
-  link: { alignItems: "center" },
-  linkText: {
-    color: ACCENT,
-    fontSize: 14,
-    textDecorationLine: "underline",
-    fontFamily: "Poppins_400Regular",
-  },
-});
 
 export default RegisterScreen;

@@ -1,12 +1,10 @@
-import { Poppins_400Regular, useFonts } from "@expo-google-fonts/poppins";
+import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, useFonts } from "@expo-google-fonts/poppins";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Linking from "expo-linking";
 import React, { useState } from "react";
-
 import {
   Dimensions,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -27,20 +25,6 @@ type CredentialBlocksProps = {
 const { width } = Dimensions.get("window");
 const isSmall = width < 400;
 const isMedium = width >= 400 && width < 800;
-
-// 🎨 Theme colors (centralized color grading)
-const theme = {
-  background: "#121212",
-  card: "#6a4fb6",
-  title: "#ffffff",
-  description: "#e2e2e2",
-  text: "#f5f5f5",
-  border: "#333333",
-  icon: "#ffffff",
-  iconSecondary: "#fafafa",
-  iconMuted: "#efefef",
-  shadow: "#000000",
-};
 
 const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
   const [showPassword, setShowPassword] = useState<boolean[]>(
@@ -77,153 +61,117 @@ const CredentialBlocks: React.FC<CredentialBlocksProps> = ({ credentials }) => {
 
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold
   });
 
   if (!fontsLoaded) return null;
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.container}>
+    <ScrollView 
+      className="flex-1 bg-gray-900"
+      contentContainerClassName="p-4"
+      showsVerticalScrollIndicator={false}
+    >
+      <View className={`flex-row flex-wrap justify-center ${isSmall ? 'flex-col' : ''}`}>
         {credentials.map((cred, index) => (
-          <View key={index} style={styles.block}>
+          <View 
+            key={index} 
+            className={`
+              bg-gray-800 border border-gray-700 rounded-2xl p-5 m-2 shadow-lg
+              ${isSmall ? 'w-full' : isMedium ? 'w-[48%]' : 'w-[30%]'}
+            `}
+          >
             {/* Title + Description */}
-            <Text style={styles.title}>{cred.title}</Text>
+            <Text className="text-white text-lg font-bold mb-1 font-poppins-semibold">
+              {cred.title}
+            </Text>
+            
             {cred.description ? (
-              <Text style={styles.description}>{cred.description}</Text>
+              <Text className="text-gray-400 text-sm mb-3 font-poppins">
+                {cred.description}
+              </Text>
             ) : null}
 
             {cred.link ? (
-              <TouchableOpacity onPress={() => Linking.openURL(cred.link!)}>
-                <Text style={styles.link}>{cred.link}</Text>
+              <TouchableOpacity 
+                onPress={() => Linking.openURL(cred.link!)}
+                className="mb-3"
+              >
+                <Text className="text-purple-400 text-sm underline font-poppins">
+                  {cred.link}
+                </Text>
               </TouchableOpacity>
             ) : null}
 
             {/* Username Row */}
-            <View style={styles.row}>
-              <Text style={styles.text}>{cred.username}</Text>
+            <View className="flex-row items-center justify-between bg-gray-700 rounded-xl p-3 mb-2">
+              <Text className="text-white text-base flex-1 font-poppins" numberOfLines={1}>
+                {cred.username}
+              </Text>
               <TouchableOpacity
-                style={styles.iconBtn}
+                className="p-2 active:scale-95"
                 onPress={() => handleCopy("username", cred.username, index)}
+                activeOpacity={0.7}
               >
                 {copied?.type === "username" && copied.index === index ? (
-                  <Ionicons
-                    name="checkmark-outline"
-                    size={18}
-                    color={theme.icon}
-                  />
+                  <Ionicons name="checkmark" size={20} color="#10B981" />
                 ) : (
-                  <Ionicons
-                    name="copy-outline"
-                    size={18}
-                    color={theme.iconSecondary}
-                  />
+                  <Ionicons name="copy-outline" size={20} color="#9CA3AF" />
                 )}
               </TouchableOpacity>
             </View>
 
             {/* Password Row */}
-            <View style={styles.row}>
-              <Text style={styles.text}>
-                {showPassword[index]
-                  ? cred.password
-                  : "*".repeat(cred.password.length)}
+            <View className="flex-row items-center justify-between bg-gray-700 rounded-xl p-3">
+              <Text className="text-white text-base flex-1 font-poppins" numberOfLines={1}>
+                {showPassword[index] ? cred.password : "•".repeat(8)}
               </Text>
-              <TouchableOpacity
-                style={styles.iconBtn}
-                onPress={() => handleCopy("password", cred.password, index)}
-              >
-                {copied?.type === "password" && copied.index === index ? (
+              
+              <View className="flex-row items-center">
+                <TouchableOpacity
+                  className="p-2 active:scale-95"
+                  onPress={() => handleCopy("password", cred.password, index)}
+                  activeOpacity={0.7}
+                >
+                  {copied?.type === "password" && copied.index === index ? (
+                    <Ionicons name="checkmark" size={20} color="#10B981" />
+                  ) : (
+                    <Ionicons name="copy-outline" size={20} color="#9CA3AF" />
+                  )}
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  className="p-2 active:scale-95"
+                  onPress={() => toggleShowPassword(index)}
+                  activeOpacity={0.7}
+                >
                   <Ionicons
-                    name="checkmark-outline"
-                    size={18}
-                    color={theme.icon}
+                    name={showPassword[index] ? "eye-off-outline" : "eye-outline"}
+                    size={20}
+                    color="#9CA3AF"
                   />
-                ) : (
-                  <Ionicons
-                    name="copy-outline"
-                    size={18}
-                    color={theme.iconMuted}
-                  />
-                )}
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.iconBtn}
-                onPress={() => toggleShowPassword(index)}
-              >
-                <Ionicons
-                  name={showPassword[index] ? "eye-off-outline" : "eye-outline"}
-                  size={18}
-                  color={theme.icon}
-                />
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         ))}
       </View>
+
+      {/* Empty State */}
+      {credentials.length === 0 && (
+        <View className="flex-1 justify-center items-center py-20">
+          <Ionicons name="lock-closed-outline" size={64} color="#6B7280" />
+          <Text className="text-gray-500 text-lg mt-4 font-poppins-medium text-center">
+            No credentials saved yet
+          </Text>
+          <Text className="text-gray-600 text-sm mt-2 font-poppins text-center">
+            Add your first credential to get started
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    paddingBottom: 20,
-  },
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    padding: 12,
-    width: "100%",
-    backgroundColor: theme.background,
-  },
-  block: {
-    backgroundColor: theme.card,
-    borderRadius: 10,
-    padding: 14,
-    flexBasis: isSmall ? "100%" : isMedium ? "48%" : "30%",
-    margin: 6,
-    // shadowColor: theme.shadow,
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.15,
-    // shadowRadius: 3,
-    elevation: 3,
-  },
-  title: {
-    fontSize: isSmall ? 16 : 18,
-    fontWeight: "bold",
-    color: theme.title,
-    marginBottom: 2,
-    fontFamily: "Poppins_400Regular",
-  },
-  description: {
-    fontSize: isSmall ? 12 : 13,
-    color: theme.description,
-    marginBottom: 8,
-    fontFamily: "Poppins_400Regular",
-  },
-  text: {
-    color: theme.text,
-    fontSize: 14,
-    flexShrink: 1,
-    fontFamily: "Poppins_400Regular",
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 4,
-  },
-  iconBtn: {
-    marginLeft: 6,
-    padding: 2,
-  },
-  link: {
-    color: "#8ab3ffff",
-    fontSize: 13,
-    marginTop: 6,
-    textDecorationLine: "underline",
-    fontFamily: "Poppins_400Regular",
-  },
-});
 
 export default CredentialBlocks;
