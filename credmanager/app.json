@@ -1,8 +1,7 @@
 {
   "expo": {
     "web": {
-       "bundler": "metro"
-    
+      "bundler": "metro"
     },
     "name": "credmanager",
     "slug": "credmanager",
@@ -49,7 +48,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "64c1c98e-28aa-4bd6-83ac-f4599b1d9eaa"
+        "projectId": "5ea83477-8adb-4d4f-b424-7e38473458c6"
       }
     }
   }
