@@ -2,9 +2,16 @@
   "build": {
     "preview": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "env": {
+          "EXPO_NO_BABEL_CACHE": "1"
+        }
       }
     },
-    "production": {}
+    "production": {
+      "env": {
+        "EXPO_NO_BABEL_CACHE": "1"
+      }
+    }
   }
 }
